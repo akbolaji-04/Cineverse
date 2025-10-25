@@ -1,0 +1,51 @@
+name: Android (Capacitor) build (template)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  android-build:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'android') || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Build web assets
+        run: npm run build
+
+      # The following steps assume you have initialized Capacitor and added an Android project under android/
+      - name: Check for android folder
+        run: |
+          if [ ! -d "android" ]; then echo "No android/ folder found — ensure Capacitor android project is added."; exit 1; fi
+
+      - name: Build Android (Gradle assembleRelease)
+        working-directory: android
+        run: |
+          ./gradlew assembleRelease -Pandroid.injected.signing.store.file=keystore.jks
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cineverse-android-apk
+          path: android/app/build/outputs/apk/release/*.apk
+
+    # NOTE: This workflow is a template — ensure you add keystore files and configure gradle signing via secrets or repository settings.
