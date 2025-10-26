@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { tmdbGet } from '../api/tmdb'
 import MovieCard from '../components/MovieCard'
 import Skeleton from '../components/Skeleton'
+import { useWatchlist } from '../context/WatchlistContext'
 
 function Row({ title, items }) {
   return (
@@ -21,7 +22,10 @@ export default function HomePage() {
   const [trending, setTrending] = useState([])
   const [popular, setPopular] = useState([])
   const [topTv, setTopTv] = useState([])
+  const [recommended, setRecommended] = useState([])
+  const [recLoading, setRecLoading] = useState(false)
   const [loading, setLoading] = useState(true)
+  const { items: watchlistItems } = useWatchlist()
 
   useEffect(() => {
     async function load() {
@@ -45,6 +49,29 @@ export default function HomePage() {
     load()
   }, [])
 
+  useEffect(() => {
+    // Fetch recommendations for the first watchlist item (if any)
+    async function loadRecs() {
+      if (!watchlistItems || watchlistItems.length === 0) {
+        setRecommended([])
+        return
+      }
+      const first = watchlistItems[0]
+      const media = first.media_type === 'tv' ? 'tv' : 'movie'
+      setRecLoading(true)
+      try {
+        const data = await tmdbGet(`/${media}/${first.id}/recommendations`)
+        setRecommended((data.results || []).slice(0, 12))
+      } catch (e) {
+        console.error('Failed to load recommendations', e)
+        setRecommended([])
+      } finally {
+        setRecLoading(false)
+      }
+    }
+    loadRecs()
+  }, [watchlistItems])
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
       {loading ? (
@@ -62,6 +89,19 @@ export default function HomePage() {
               <div className="relative z-10 p-6 md:p-10 text-white max-w-3xl">
                 <h1 className="text-2xl md:text-4xl font-bold mb-2">{hero.title || hero.name}</h1>
                 <p className="text-sm md:text-base text-gray-200 line-clamp-3">{hero.overview}</p>
+              </div>
+            </section>
+          )}
+
+          {(recLoading || (recommended && recommended.length > 0)) && (
+            <section className="mb-6">
+              <h2 className="text-lg font-semibold mb-3 text-white">Recommended for you</h2>
+              <div className="flex gap-4 overflow-x-auto py-2">
+                {recLoading ? (
+                  <Skeleton count={6} />
+                ) : (
+                  recommended.map(i => <MovieCard key={`r-${i.id}-${i.media_type || 'm'}`} item={i} />)
+                )}
               </div>
             </section>
           )}

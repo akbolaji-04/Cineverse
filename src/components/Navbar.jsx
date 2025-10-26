@@ -36,21 +36,33 @@ export default function Navbar() {
 }
 
 function ThemeToggle() {
-  const { theme, toggle } = (function use(){
-    try { const mod = require('../context/ThemeContext.jsx') } catch(e){}
-    return { theme: undefined, toggle: undefined }
-  })()
-  // We can't require context here synchronously in the bundler; instead use DOM toggle button that reads storage.
-  // Simpler: implement a small local toggle that flips the class on document.
-  function onClick() {
-    const root = document.documentElement
-    if (root.classList.contains('dark')) {
-      root.classList.remove('dark')
-      try { localStorage.setItem('cineverse_theme','light') } catch(e){}
-    } else {
-      root.classList.add('dark')
-      try { localStorage.setItem('cineverse_theme','dark') } catch(e){}
+  // Use the ThemeContext hook so toggling persists and is consistent
+  try {
+    // dynamic import to avoid tree-shaking weirdness
+    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+    const { useTheme } = require('../context/ThemeContext.jsx')
+    // `useTheme` is a hook; we need to call it inside component render
+    const Hook = () => {
+      const { theme, toggle } = useTheme()
+      return (
+        <button onClick={toggle} className="px-2 py-1 rounded bg-white/6 text-white">
+          {theme === 'dark' ? 'Light' : 'Dark'}
+        </button>
+      )
     }
+    return <Hook />
+  } catch (e) {
+    // Fallback in case require fails (older environments)
+    function onClick() {
+      const root = document.documentElement
+      if (root.classList.contains('dark')) {
+        root.classList.remove('dark')
+        try { localStorage.setItem('cineverse_theme','light') } catch(e){}
+      } else {
+        root.classList.add('dark')
+        try { localStorage.setItem('cineverse_theme','dark') } catch(e){}
+      }
+    }
+    return (<button onClick={onClick} className="px-2 py-1 rounded bg-white/6 text-white">Theme</button>)
   }
-  return (<button onClick={onClick} className="px-2 py-1 rounded bg-white/6 text-white">Theme</button>)
 }

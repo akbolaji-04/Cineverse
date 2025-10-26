@@ -96,7 +96,7 @@ export default function Autosuggest({ onSearch = () => {}, onNavigateTo = () => 
           onKeyDown={onKeyDown}
           placeholder="Search movies, shows, people..."
           aria-label="Search"
-          className="w-full rounded-lg px-3 py-2 bg-white/3 placeholder:text-white/60 text-white outline-none focus:ring-2 focus:ring-red-400"
+          className="w-full rounded-lg px-3 py-2 bg-white/3 placeholder:text-gray-400 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-red-400"
         />
         <button
           className="ml-3 px-4 py-2 rounded-lg bg-red-500 text-black font-semibold"
