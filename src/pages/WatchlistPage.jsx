@@ -14,7 +14,19 @@ export default function WatchlistPage() {
         {items.map(i => (
           <div key={`${i.id}-${i.media_type}`} className="flex flex-col items-center">
             <MovieCard item={i} />
-            <button onClick={() => removeItem(i.id, i.media_type)} className="mt-2 px-3 py-1 rounded-md bg-gray-700 text-white text-sm">Remove</button>
+            <div className="flex gap-2 mt-2">
+              <button onClick={() => removeItem(i.id, i.media_type)} className="px-3 py-1 rounded-md bg-gray-700 text-white text-sm">Remove</button>
+              <button onClick={() => {
+                const data = JSON.stringify(items, null, 2)
+                const blob = new Blob([data], { type: 'application/json' })
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = 'cineverse-watchlist.json'
+                a.click()
+                URL.revokeObjectURL(url)
+              }} className="px-3 py-1 rounded-md bg-green-600 text-white text-sm">Export JSON</button>
+            </div>
           </div>
         ))}
       </div>

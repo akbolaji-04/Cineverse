@@ -26,10 +26,31 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 flex items-center gap-3">
+          <ThemeToggle />
           <Link to="/watchlist" className="text-gray-300 hover:text-white">Watchlist</Link>
         </div>
       </div>
     </nav>
   )
+}
+
+function ThemeToggle() {
+  const { theme, toggle } = (function use(){
+    try { const mod = require('../context/ThemeContext.jsx') } catch(e){}
+    return { theme: undefined, toggle: undefined }
+  })()
+  // We can't require context here synchronously in the bundler; instead use DOM toggle button that reads storage.
+  // Simpler: implement a small local toggle that flips the class on document.
+  function onClick() {
+    const root = document.documentElement
+    if (root.classList.contains('dark')) {
+      root.classList.remove('dark')
+      try { localStorage.setItem('cineverse_theme','light') } catch(e){}
+    } else {
+      root.classList.add('dark')
+      try { localStorage.setItem('cineverse_theme','dark') } catch(e){}
+    }
+  }
+  return (<button onClick={onClick} className="px-2 py-1 rounded bg-white/6 text-white">Theme</button>)
 }

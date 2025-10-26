@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { tmdbGet, posterUrl } from '../api/tmdb'
 import ActorCard from '../components/ActorCard'
+import TrailerModal from '../components/TrailerModal'
+import { tmdbGet, posterUrl } from '../api/tmdb'
 import { useWatchlist } from '../context/WatchlistContext'
 
 export default function TvDetailsPage() {
@@ -10,6 +11,8 @@ export default function TvDetailsPage() {
   const [tv, setTv] = useState(null)
   const [error, setError] = useState(null)
   const { addItem, removeItem, items } = useWatchlist()
+  const [trailer, setTrailer] = React.useState(null)
+  const [trailerOpen, setTrailerOpen] = React.useState(false)
 
   useEffect(() => {
     async function load() {
@@ -44,6 +47,23 @@ export default function TvDetailsPage() {
             ) : (
               <button onClick={() => removeItem(tv.id, 'tv')} className="px-4 py-2 rounded-md bg-gray-700 text-white">Remove from Watchlist</button>
             )}
+            <button
+              onClick={async () => {
+                try {
+                  const data = await tmdbGet(`/tv/${tv.id}/videos`)
+                  const vids = (data.results || []).filter(v => v.site === 'YouTube' && v.type === 'Trailer')
+                  setTrailer(vids[0] || null)
+                  setTrailerOpen(true)
+                } catch (e) {
+                  console.error(e)
+                  setTrailer(null)
+                  setTrailerOpen(true)
+                }
+              }}
+              className="px-4 py-2 rounded-md bg-white/5 text-white"
+            >
+              Watch Trailer
+            </button>
             <button onClick={() => nav(-1)} className="px-4 py-2 rounded-md bg-white/5 text-white">Back</button>
           </div>
         </div>
@@ -57,6 +77,7 @@ export default function TvDetailsPage() {
           ))}
         </div>
       </section>
+      <TrailerModal open={trailerOpen} onClose={() => setTrailerOpen(false)} video={trailer} />
     </div>
   )
 }
