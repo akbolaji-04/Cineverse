@@ -3,7 +3,7 @@
 CineVerse is a responsive movie discovery web app that lets users explore trending films, search by title, and view key details powered by the TMDB API.  
 Built with modern **HTML**, **CSS**, and **JavaScript**, this project focuses on clean UI, API integration, and responsive design.
 
-![CineVerse Preview](./screenshot-2025-11-08.png)
+![CineVerse Preview](./Screenshot 2025-11-08 220749.png)
 
 🔗 **Live Demo:** [cineverse-ak.netlify.app](https://cineverse-ak.netlify.app)
 
