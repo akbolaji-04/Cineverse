@@ -93,7 +93,7 @@ export default function HomePage() {
             </section>
           )}
 
-          {(recLoading || (recommended && recommended.length > 0)) && (
+          {(recLoading || (recommended && recommended.length > 0)) ? (
             <section className="mb-6">
               <h2 className="text-lg font-semibold mb-3 text-white">Recommended for you</h2>
               <div className="flex gap-4 overflow-x-auto py-2">
@@ -104,7 +104,12 @@ export default function HomePage() {
                 )}
               </div>
             </section>
-          )}
+          ) : (watchlistItems.length === 0 && !loading && (
+            <section className="mb-6">
+              <h2 className="text-lg font-semibold mb-3 text-white">Recommended for you</h2>
+              <p className="text-gray-400">Add to your watchlist to get personalized picks!</p>
+            </section>
+          ))}
 
           <section className="mb-6">
             <h2 className="text-lg font-semibold mb-3 text-white">Trending Now</h2>

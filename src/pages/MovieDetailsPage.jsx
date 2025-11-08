@@ -17,8 +17,9 @@ export default function MovieDetailsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await tmdbGet(`/movie/${id}`, { append_to_response: 'credits' })
-        setMovie(data)
+        const data = await tmdbGet(`/movie/${id}`, { append_to_response: 'credits,videos' })
+        const providersData = await tmdbGet(`/movie/${id}/watch/providers`)
+        setMovie({ ...data, watchProviders: providersData.results || {} })
       } catch (e) {
         setError('Movie not found')
       }
@@ -40,6 +41,50 @@ export default function MovieDetailsPage() {
           <h1 className="text-2xl font-bold mb-2">{movie.title}</h1>
           <p className="text-gray-200 mb-3">{movie.overview}</p>
           <div className="text-sm text-gray-400 mb-4">Released: {movie.release_date} • Runtime: {movie.runtime} min</div>
+
+          {movie.watchProviders.US && (
+            <div className="mb-4">
+              {movie.watchProviders.US.flatrate && (
+                <div className="mb-2">
+                  <h3 className="text-md font-semibold text-white">Stream:</h3>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {movie.watchProviders.US.flatrate.map(p => (
+                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-white">
+                        <img src={`https://image.tmdb.org/t/p/original${p.logo_path}`} alt={p.provider_name} className="w-6 h-6 rounded-full mr-2" />
+                        {p.provider_name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {movie.watchProviders.US.buy && (
+                <div className="mb-2">
+                  <h3 className="text-md font-semibold text-white">Buy:</h3>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {movie.watchProviders.US.buy.map(p => (
+                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-white">
+                        <img src={`https://image.tmdb.org/t/p/original${p.logo_path}`} alt={p.provider_name} className="w-6 h-6 rounded-full mr-2" />
+                        {p.provider_name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {movie.watchProviders.US.rent && (
+                <div className="mb-2">
+                  <h3 className="text-md font-semibold text-white">Rent:</h3>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {movie.watchProviders.US.rent.map(p => (
+                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-white">
+                        <img src={`https://image.tmdb.org/t/p/original${p.logo_path}`} alt={p.provider_name} className="w-6 h-6 rounded-full mr-2" />
+                        {p.provider_name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex gap-3">
             {!inList ? (
