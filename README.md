@@ -1,7 +1,8 @@
 <h1 align="center">🎬 CineVerse – Your Universe of Film & TV</h1>
 
 <p align="center">
-  <img src="./Screenshot-2025-11-08-220749.png" alt="CineVerse Preview" width="85%" />
+  <img src="./screenshot.png" alt="CineVerse Preview" width="85%" />
+  
 </p>
 
 <p align="center">
