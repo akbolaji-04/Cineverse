@@ -7,6 +7,7 @@ import TvDetailsPage from './pages/TvDetailsPage'
 import PersonDetailsPage from './pages/PersonDetailsPage'
 import SearchResultsPage from './pages/SearchResultsPage'
 import WatchlistPage from './pages/WatchlistPage'
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   )
 }
