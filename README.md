@@ -1,36 +1,45 @@
-🎬 CineVerse – Discover, Explore & Save Your Favorite Movies
+<h1 align="center">🎬 CineVerse – Your Universe of Film & TV</h1>
 
-CineVerse is a sleek and responsive movie discovery web app built with React and powered by the TMDB API.
-It lets users search movies, view detailed info, add to their watchlist, and explore trending titles — all in a clean, cinematic interface.
+<p align="center">
+  <img src="./Screenshot-2025-11-08-220749.png" alt="CineVerse Preview" width="85%" />
+</p>
 
-🔗 Live Demo: cineverse-ak.netlify.app
+<p align="center">
+  <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/React-18.0-blue?logo=react&logoColor=white" /></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/TailwindCSS-3.0-38B2AC?logo=tailwindcss&logoColor=white" /></a>
+  <a href="https://developer.themoviedb.org/"><img src="https://img.shields.io/badge/TMDB-API-orange?logo=themoviedatabase&logoColor=white" /></a>
+  <img src="https://img.shields.io/badge/License-MIT-green" />
+</p>
 
-💻 GitHub Repo: github.com/akbolaji-04/Cineverse
+---
 
-🚀 Features
+## 🌟 Overview  
+**CineVerse** is a dynamic and responsive movie discovery app built with **React** and powered by the **TMDB API**.  
+It allows users to search, explore, and add favorite movies to their watchlist — all in a clean, cinematic UI.  
 
-🔍 Search any movie or show by title
+🔗 **Live Demo:** [cineverse-ak.netlify.app](https://cineverse-ak.netlify.app)  
+💻 **GitHub Repo:** [github.com/akbolaji-04/Cineverse](https://github.com/akbolaji-04/Cineverse)
 
-🎥 View details including ratings, genres, cast, and trailers
+---
 
-❤️ Add/Remove movies from your personal watchlist (local storage)
+## 🚀 Features  
+✅ Search and explore movies in real-time  
+✅ View trailers, ratings, genres, cast & release info  
+✅ Add or remove items from your **Watchlist** (saved in localStorage)  
+✅ Light / Dark mode toggle 🌗  
+✅ Fully responsive, sleek design  
 
-🌗 Dark/Light mode toggle for personalized viewing
+---
 
-📱 Fully responsive across all screen sizes
+## 🧠 Tech Stack  
 
-🧠 Tech Stack
+| Category | Tools Used |
+|-----------|-------------|
+| **Frontend Framework** | ⚛️ React.js |
+| **Styling** | 🎨 Tailwind CSS |
+| **API** | 🎬 TMDB API |
+| **Routing** | 🔄 React Router DOM |
+| **State & Storage** | 🧩 Context API + Local Storage |
+| **Deployment** | 🌍 Netlify |
 
-⚛️ React.js – for component-based UI
-
-🎬 TMDB API – for live movie data
-
-🎨 Tailwind CSS – for fast and clean styling
-
-🔄 React Router – for page navigation
-
-💾 Local Storage – for watchlist persistence
-
-📸 Preview
-![CineVerse Preview](./screenshot.png)
-
+---
