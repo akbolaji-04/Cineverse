@@ -1,30 +1,36 @@
-# 🎬 CineVerse – Your Universe of Film and Television
+🎬 CineVerse – Discover, Explore & Save Your Favorite Movies
 
-CineVerse is a responsive movie discovery web app that lets users explore trending films, search by title, and view key details powered by the TMDB API.  
-Built with modern **HTML**, **CSS**, and **JavaScript**, this project focuses on clean UI, API integration, and responsive design.
+CineVerse is a sleek and responsive movie discovery web app built with React and powered by the TMDB API.
+It lets users search movies, view detailed info, add to their watchlist, and explore trending titles — all in a clean, cinematic interface.
 
+🔗 Live Demo: cineverse-ak.netlify.app
+
+💻 GitHub Repo: github.com/akbolaji-04/Cineverse
+
+🚀 Features
+
+🔍 Search any movie or show by title
+
+🎥 View details including ratings, genres, cast, and trailers
+
+❤️ Add/Remove movies from your personal watchlist (local storage)
+
+🌗 Dark/Light mode toggle for personalized viewing
+
+📱 Fully responsive across all screen sizes
+
+🧠 Tech Stack
+
+⚛️ React.js – for component-based UI
+
+🎬 TMDB API – for live movie data
+
+🎨 Tailwind CSS – for fast and clean styling
+
+🔄 React Router – for page navigation
+
+💾 Local Storage – for watchlist persistence
+
+📸 Preview
 ![CineVerse Preview](./screenshot.png)
 
-🔗 **Live Demo:** [cineverse-ak.netlify.app](https://cineverse-ak.netlify.app)
-
----
-
-## 💡 Features
-- Search movies and view details in real-time  
-- Fetches live data using **TMDB API**  
-- Responsive and mobile-friendly layout  
-- Clean, modern UI design  
-
----
-
-## 🧰 Tech Stack
-- HTML5  
-- CSS3 (Flexbox & Grid)  
-- JavaScript (Fetch API)  
-
----
-
-## ⚙️ Setup Instructions
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/akbolaji-04/CineVerse.git
