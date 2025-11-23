@@ -3,6 +3,20 @@
 @tailwind utilities;
 
 /* Small custom styles that complement Tailwind utilities */
-body{@apply bg-gradient-to-b from-[#071018] to-[#071018] text-[#e6eef6];}
-.custom-scrollbar::-webkit-scrollbar{height:9px}
-.custom-scrollbar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:6px}
+body {
+  /* Default (Light Mode): White background, Dark text */
+  @apply bg-white text-gray-900 transition-colors duration-300;
+}
+
+.dark body {
+  /* Dark Mode: Original dark gradient and light text */
+  @apply bg-gradient-to-b from-[#071018] to-[#071018] text-[#e6eef6];
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 9px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+}
