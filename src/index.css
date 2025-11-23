@@ -5,7 +5,8 @@
 /* Small custom styles that complement Tailwind utilities */
 body {
   /* Default (Light Mode): White background, Dark text */
-  @apply bg-white text-gray-900 transition-colors duration-300;
+  /* FIX: Added overflow-x-hidden to prevent horizontal page scroll */
+  @apply bg-white text-gray-900 transition-colors duration-300 overflow-x-hidden;
 }
 
 .dark body {
