@@ -4,19 +4,6 @@ import MovieCard from '../components/MovieCard'
 import Skeleton from '../components/Skeleton'
 import { useWatchlist } from '../context/WatchlistContext'
 
-function Row({ title, items }) {
-  return (
-    <section className="row">
-      <h3>{title}</h3>
-      <div className="row-items">
-        {items.map(i => (
-          <MovieCard key={`${i.id}-${i.media_type || 'm'}`} item={i} />
-        ))}
-      </div>
-    </section>
-  )
-}
-
 export default function HomePage() {
   const [hero, setHero] = useState(null)
   const [trending, setTrending] = useState([])
@@ -50,7 +37,6 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
-    // Fetch recommendations for the first watchlist item (if any)
     async function loadRecs() {
       if (!watchlistItems || watchlistItems.length === 0) {
         setRecommended([])
@@ -95,8 +81,9 @@ export default function HomePage() {
 
           {(recLoading || (recommended && recommended.length > 0)) ? (
             <section className="mb-6">
-              <h2 className="text-lg font-semibold mb-3 text-white">Recommended for you</h2>
-              <div className="flex gap-4 overflow-x-autoXH py-2 custom-scrollbar">
+              {/* FIX: Text color adapts to theme */}
+              <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Recommended for you</h2>
+              <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
                 {recLoading ? (
                   <Skeleton count={6} />
                 ) : (
@@ -106,27 +93,31 @@ export default function HomePage() {
             </section>
           ) : (watchlistItems.length === 0 && !loading && (
             <section className="mb-6">
-              <h2 className="text-lg font-semibold mb-3 text-white">Recommended for you</h2>
-              <p className="text-gray-400">Add to your watchlist to get personalized picks!</p>
+               {/* FIX: Text color adapts to theme */}
+              <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Recommended for you</h2>
+              <p className="text-gray-600 dark:text-gray-400">Add to your watchlist to get personalized picks!</p>
             </section>
           ))}
 
           <section className="mb-6">
-            <h2 className="text-lg font-semibold mb-3 text-white">Trending Now</h2>
-            <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
+             {/* FIX: Text color adapts to theme */}
+            <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Trending Now</h2>
+            <div className="flex gap-4 overflow-x-autoXH py-2 custom-scrollbar">
               {trending.map(i => <MovieCard key={`t-${i.id}`} item={i} />)}
             </div>
           </section>
 
           <section className="mb-6">
-            <h2 className="text-lg font-semibold mb-3 text-white">Popular Movies</h2>
+             {/* FIX: Text color adapts to theme */}
+            <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Popular Movies</h2>
             <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
               {popular.map(i => <MovieCard key={`p-${i.id}`} item={i} />)}
             </div>
           </section>
 
           <section className="mb-6">
-            <h2 className="text-lg font-semibold mb-3 text-white">Top Rated TV Shows</h2>
+             {/* FIX: Text color adapts to theme */}
+            <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Top Rated TV Shows</h2>
             <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
               {topTv.map(i => <MovieCard key={`tv-${i.id}`} item={i} />)}
             </div>
