@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Autosuggest from './Autosuggest.jsx'
+import { useTheme } from '../context/ThemeContext.jsx'
 
 export default function Navbar() {
   const navigate = useNavigate()
@@ -41,33 +42,15 @@ export default function Navbar() {
 }
 
 function ThemeToggle() {
-  // Use the ThemeContext hook so toggling persists and is consistent
-  try {
-    // dynamic import to avoid tree-shaking weirdness
-    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-    const { useTheme } = require('../context/ThemeContext.jsx')
-    // `useTheme` is a hook; we need to call it inside component render
-    constQDHook = () => {
-      const { theme, toggle } = useTheme()
-      return (
-        <button onClick={toggle} className="px-2 py-1 rounded bg-white/10 text-white text-xs md:text-sm border border-white/5">
-          {theme === 'dark' ? 'Light' : 'Dark'}
-        </button>
-      )
-    }
-    return <QDHook />
-  } catch (e) {
-    // Fallback in case require fails (older environments)
-    function onClick() {
-      const root = document.documentElement
-      if (root.classList.contains('dark')) {
-        root.classList.remove('dark')
-        try { localStorage.setItem('cineverse_theme','light') } catch(e){}
-      } else {
-        root.classList.add('dark')
-        try { localStorage.setItem('cineverse_theme','dark') } catch(e){}
-      }
-    }
-    return (<button onClick={onClick} className="px-2 py-1 rounded bg-white/6 text-white text-xs">Theme</button>)
-  }
+  const { theme, toggle } = useTheme()
+
+  return (
+    <button 
+      onClick={toggle} 
+      className="px-3 py-1.5 rounded-md bg-white/10 text-white text-xs md:text-sm border border-white/10 hover:bg-white/20 transition-colors"
+      aria-label="Toggle Dark Mode"
+    >
+      {theme === 'dark' ? 'Light' : 'Dark'}
+    </button>
+  )
 }
