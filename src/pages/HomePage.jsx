@@ -34,9 +34,9 @@ export default function HomePage() {
         const trendingData = await tmdbGet('/trending/all/day')
         const popularData = await tmdbGet('/movie/popular')
         const topTvData = await tmdbGet('/tv/top_rated')
-  const topRated = await tmdbGet('/movie/top_rated')
+        const topRated = await tmdbGet('/movie/top_rated')
 
-  setTrending(trendingData.results || [])
+        setTrending(trendingData.results || [])
         setPopular(popularData.results || [])
         setTopTv(topTvData.results || [])
         setHero((topRated.results && topRated.results[0]) || null)
@@ -80,15 +80,15 @@ export default function HomePage() {
         <>
           {hero && (
             <section
-              className="relative rounded-lg overflow-hidden mb-6 bg-cover bg-center h-72"
+              className="relative rounded-xl overflow-hidden mb-8 bg-cover bg-center min-h-[500px] md:h-[600px] flex items-end shadow-2xl"
               style={{
                 backgroundImage: `url(${hero.backdrop_path ? 'https://image.tmdb.org/t/p/original'+hero.backdrop_path : ''})`
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              <div className="relative z-10 p-6 md:p-10 text-white max-w-3xl">
-                <h1 className="text-2xl md:text-4xl font-bold mb-2">{hero.title || hero.name}</h1>
-                <p className="text-sm md:text-base text-gray-200 line-clamp-3">{hero.overview}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#071018] via-black/60 to-transparent" />
+              <div className="relative z-10 p-6 md:p-10 text-white max-w-3xl w-full">
+                <h1 className="text-3xl md:text-5xl font-extrabold mb-3 leading-tight drop-shadow-lg">{hero.title || hero.name}</h1>
+                <p className="text-sm md:text-lg text-gray-200 line-clamp-3 md:line-clamp-4 drop-shadow-md">{hero.overview}</p>
               </div>
             </section>
           )}
@@ -96,7 +96,7 @@ export default function HomePage() {
           {(recLoading || (recommended && recommended.length > 0)) ? (
             <section className="mb-6">
               <h2 className="text-lg font-semibold mb-3 text-white">Recommended for you</h2>
-              <div className="flex gap-4 overflow-x-auto py-2">
+              <div className="flex gap-4 overflow-x-autoXH py-2 custom-scrollbar">
                 {recLoading ? (
                   <Skeleton count={6} />
                 ) : (
@@ -113,21 +113,21 @@ export default function HomePage() {
 
           <section className="mb-6">
             <h2 className="text-lg font-semibold mb-3 text-white">Trending Now</h2>
-            <div className="flex gap-4 overflow-x-auto py-2">
+            <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
               {trending.map(i => <MovieCard key={`t-${i.id}`} item={i} />)}
             </div>
           </section>
 
           <section className="mb-6">
             <h2 className="text-lg font-semibold mb-3 text-white">Popular Movies</h2>
-            <div className="flex gap-4 overflow-x-auto py-2">
+            <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
               {popular.map(i => <MovieCard key={`p-${i.id}`} item={i} />)}
             </div>
           </section>
 
           <section className="mb-6">
             <h2 className="text-lg font-semibold mb-3 text-white">Top Rated TV Shows</h2>
-            <div className="flex gap-4 overflow-x-auto py-2">
+            <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
               {topTv.map(i => <MovieCard key={`tv-${i.id}`} item={i} />)}
             </div>
           </section>
