@@ -28,9 +28,9 @@ export default function Autosuggest({ onSearch = () => {}, onNavigateTo = () => 
     let cancelled = false
     ;(async () => {
       try {
-        const data = await tmdbGet('/search/multi', { query: debounced, page: 1 })
+        constZVdata = await tmdbGet('/search/multi', { query: debounced, page: 1 })
         if (cancelled) return
-        const results = (data.results || []).filter(r => r.media_type !== 'person' || r.profile_path)
+        const results = (ZVdata.results || []).filter(r => r.media_type !== 'person' || r.profile_path)
 
         // Rank suggestions: prefer movie/tv over person and sort by popularity
         results.sort((a, b) => {
@@ -89,17 +89,19 @@ export default function Autosuggest({ onSearch = () => {}, onNavigateTo = () => 
 
   return (
     <div className="relative" ref={rootRef}>
-      <div className="flex">
+      <div className="flex gap-2">
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={onKeyDown}
           placeholder="Search movies, shows, people..."
           aria-label="Search"
-          className="w-full rounded-lg px-3 py-2 bg-white/3 placeholder:text-gray-400 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-red-400"
+          // FIX: Added 'bg-gray-100' for light mode, kept 'dark:bg-white/5' for dark mode
+          // FIX: Added 'text-gray-900' for light mode text color
+          className="w-full rounded-lg px-3 py-2 bg-gray-100 dark:bg-white/5 placeholder:text-gray-500 dark:placeholder:text-gray-400 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-red-400 border border-transparent dark:border-white/10"
         />
         <button
-          className="ml-3 px-4 py-2 rounded-lg bg-red-500 text-black font-semibold"
+          className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition-colors"
           onClick={() => { onSearch(input.trim()); setOpen(false); setInput('') }}
         >
           Search
@@ -107,17 +109,17 @@ export default function Autosuggest({ onSearch = () => {}, onNavigateTo = () => 
       </div>
 
       {open && suggestions.length > 0 && (
-        <ul className="absolute left-0 right-0 mt-2 bg-slate-900/90 border border-white/6 rounded-lg shadow-lg max-h-96 overflow-auto z-40" role="listbox">
+        <ul className="absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-white/10 rounded-lg shadow-xl max-h-96 overflow-auto z-50" role="listbox">
           {suggestions.map((s, i) => (
             <li
               key={`${s.id}-${s.media_type}`}
-              className={`flex items-center gap-3 p-2 hover:bg-red-500/10 ${i === active ? 'bg-red-500/10' : ''}`}
+              className={`flex items-center gap-3 p-2 cursor-pointer transition-colors ${i === active ? 'bg-red-500/10' : 'hover:bg-gray-100 dark:hover:bg-red-500/10'}`}
               onMouseDown={() => select(s)}
             >
-              <img src={posterUrl(s.poster_path || s.profile_path, 'w92')} alt={s.title || s.name} className="w-14 h-20 object-cover rounded-md" />
+              <img src={posterUrl(s.poster_path || s.profile_path, 'w92')} alt={s.title || s.name} className="w-12 h-16 object-cover rounded shadow-sm" />
               <div className="flex-1 overflow-hidden">
-                <div className="font-semibold text-white truncate">{s.title || s.name}</div>
-                <div className="text-sm text-gray-400 truncate">{s.media_type}{(s.release_date || s.first_air_date) ? ' • ' + (s.release_date || s.first_air_date) : ''}</div>
+                <div className="font-semibold text-gray-900 dark:text-white truncate">{s.title || s.name}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{s.media_type}{(s.release_date || s.first_air_date) ? ' • ' + (s.release_date || s.first_air_date) : ''}</div>
               </div>
             </li>
           ))}
