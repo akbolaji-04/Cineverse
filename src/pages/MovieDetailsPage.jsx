@@ -27,8 +27,8 @@ export default function MovieDetailsPage() {
     load()
   }, [id])
 
-  if (error) return <div className="max-w-6xl mx-auto px-4 py-8"><h2 className="text-red-400">{error}</h2></div>
-  if (!movie) return <div className="max-w-6xl mx-auto px-4 py-8">Loading...</div>
+  if (error) return <div className="max-w-6xl mx-auto px-4 py-8"><h2 className="text-red-500">{error}</h2></div>
+  if (!movie) return <div className="max-w-6xl mx-auto px-4 py-8 text-gray-900 dark:text-white">Loading...</div>
 
   const inList = items.find(i => i.id === movie.id && i.media_type === 'movie')
 
@@ -37,19 +37,22 @@ export default function MovieDetailsPage() {
       <div className="flex flex-col md:flex-row gap-6">
         <img src={posterUrl(movie.poster_path, 'w500')} alt={movie.title} className="w-full md:w-56 rounded-lg shadow-lg" />
 
-        <div className="flex-1 text-white">
+        {/* FIX: Main text container adapts to theme */}
+        <div className="flex-1 text-gray-900 dark:text-white">
           <h1 className="text-2xl font-bold mb-2">{movie.title}</h1>
-          <p className="text-gray-200 mb-3">{movie.overview}</p>
-          <div className="text-sm text-gray-400 mb-4">Released: {movie.release_date} • Runtime: {movie.runtime} min</div>
+          {/* FIX: Overview text is dark gray in light mode */}
+          <p className="text-gray-700 dark:text-gray-200 mb-3 leading-relaxed">{movie.overview}</p>
+          {/* FIX: Metadata text is medium gray in light mode */}
+          <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">Released: {movie.release_date} • Runtime: {movie.runtime} min</div>
 
           {movie.watchProviders.US && (
             <div className="mb-4">
               {movie.watchProviders.US.flatrate && (
                 <div className="mb-2">
-                  <h3 className="text-md font-semibold text-white">Stream:</h3>
+                  <h3 className="text-md font-semibold text-gray-900 dark:text-white">Stream:</h3>
                   <div className="flex flex-wrap gap-2 mt-1">
                     {movie.watchProviders.US.flatrate.map(p => (
-                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-white">
+                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-gray-900 dark:text-white transition-colors">
                         <img src={`https://image.tmdb.org/t/p/original${p.logo_path}`} alt={p.provider_name} className="w-6 h-6 rounded-full mr-2" />
                         {p.provider_name}
                       </a>
@@ -59,10 +62,10 @@ export default function MovieDetailsPage() {
               )}
               {movie.watchProviders.US.buy && (
                 <div className="mb-2">
-                  <h3 className="text-md font-semibold text-white">Buy:</h3>
+                  <h3 className="text-md font-semibold text-gray-900 dark:text-white">Buy:</h3>
                   <div className="flex flex-wrap gap-2 mt-1">
                     {movie.watchProviders.US.buy.map(p => (
-                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-white">
+                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-gray-900 dark:text-white transition-colors">
                         <img src={`https://image.tmdb.org/t/p/original${p.logo_path}`} alt={p.provider_name} className="w-6 h-6 rounded-full mr-2" />
                         {p.provider_name}
                       </a>
@@ -72,10 +75,10 @@ export default function MovieDetailsPage() {
               )}
               {movie.watchProviders.US.rent && (
                 <div className="mb-2">
-                  <h3 className="text-md font-semibold text-white">Rent:</h3>
+                  <h3 className="text-md font-semibold text-gray-900 dark:text-white">Rent:</h3>
                   <div className="flex flex-wrap gap-2 mt-1">
                     {movie.watchProviders.US.rent.map(p => (
-                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-white">
+                      <a key={p.provider_id} href={movie.watchProviders.US.link} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full px-3 py-1 text-sm text-gray-900 dark:text-white transition-colors">
                         <img src={`https://image.tmdb.org/t/p/original${p.logo_path}`} alt={p.provider_name} className="w-6 h-6 rounded-full mr-2" />
                         {p.provider_name}
                       </a>
@@ -88,9 +91,9 @@ export default function MovieDetailsPage() {
 
           <div className="flex gap-3">
             {!inList ? (
-              <button onClick={() => addItem({ id: movie.id, title: movie.title, poster_path: movie.poster_path, media_type: 'movie' })} className="px-4 py-2 rounded-md bg-red-500 text-black font-semibold">Add to Watchlist</button>
+              <button onClick={() => addItem({ id: movie.id, title: movie.title, poster_path: movie.poster_path, media_type: 'movie' })} className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors">Add to Watchlist</button>
             ) : (
-              <button onClick={() => removeItem(movie.id, 'movie')} className="px-4 py-2 rounded-md bg-gray-700 text-white">Remove from Watchlist</button>
+              <button onClick={() => removeItem(movie.id, 'movie')} className="px-4 py-2 rounded-md bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 text-black dark:text-white font-semibold transition-colors">Remove from Watchlist</button>
             )}
             <button
               onClick={async () => {
@@ -105,18 +108,18 @@ export default function MovieDetailsPage() {
                   setTrailerOpen(true)
                 }
               }}
-              className="px-4 py-2 rounded-md bg-white/5 text-white"
+              className="px-4 py-2 rounded-md bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 text-black dark:text-white transition-colors font-medium border border-gray-300 dark:border-transparent"
             >
               Watch Trailer
             </button>
-            <button onClick={() => nav(-1)} className="px-4 py-2 rounded-md bg-white/5 text-white">Back</button>
+            <button onClick={() => nav(-1)} className="px-4 py-2 rounded-md bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 text-black dark:text-white transition-colors font-medium border border-gray-300 dark:border-transparent">Back</button>
           </div>
         </div>
       </div>
 
       <section className="mt-8">
-        <h2 className="text-lg font-semibold mb-3 text-white">Cast</h2>
-        <div className="flex gap-4 overflow-x-auto py-2">
+        <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Cast</h2>
+        <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
           {(movie.credits && movie.credits.cast ? movie.credits.cast.slice(0, 12) : []).map(c => (
             <ActorCard key={c.cast_id || c.id} person={c} />
           ))}
