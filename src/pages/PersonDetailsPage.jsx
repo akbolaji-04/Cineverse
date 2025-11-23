@@ -23,23 +23,27 @@ export default function PersonDetailsPage() {
     load()
   }, [id])
 
-  if (error) return <div className="max-w-6xl mx-auto px-4 py-8"><h2 className="text-red-400">{error}</h2></div>
-  if (!person) return <div className="max-w-6xl mx-auto px-4 py-8">Loading...</div>
+  if (error) return <div className="max-w-6xl mx-auto px-4 py-8"><h2 className="text-red-500">{error}</h2></div>
+  if (!person) return <div className="max-w-6xl mx-auto px-4 py-8 text-gray-900 dark:text-white">Loading...</div>
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-6 items-start">
         <img src={posterUrl(person.profile_path, 'w300')} alt={person.name} className="w-full md:w-56 rounded-md shadow-md" />
-        <div className="flex-1 text-white">
+        
+        {/* FIX: Main container text adapts to theme */}
+        <div className="flex-1 text-gray-900 dark:text-white">
           <h1 className="text-2xl font-bold mb-2">{person.name}</h1>
-          <p className="text-gray-200 mb-3">{person.biography || 'No biography available.'}</p>
-          <div className="text-sm text-gray-400">Born: {person.birthday} {person.place_of_birth ? 'in ' + person.place_of_birth : ''}</div>
+          {/* FIX: Biography text */}
+          <p className="text-gray-700 dark:text-gray-200 mb-3 leading-relaxed">{person.biography || 'No biography available.'}</p>
+          {/* FIX: Metadata text */}
+          <div className="text-sm text-gray-500 dark:text-gray-400">Born: {person.birthday} {person.place_of_birth ? 'in ' + person.place_of_birth : ''}</div>
         </div>
       </div>
 
       <section className="mt-8">
-        <h2 className="text-lg font-semibold mb-3 text-white">Filmography</h2>
-        <div className="flex gap-4 overflow-x-auto py-2">
+        <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Filmography</h2>
+        <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
           {credits.slice(0, 24).map(c => (
             <MovieCard key={`${c.id}-${c.media_type}`} item={{ ...c, media_type: c.media_type }} />
           ))}
