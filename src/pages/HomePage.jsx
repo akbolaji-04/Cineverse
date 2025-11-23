@@ -59,9 +59,13 @@ export default function HomePage() {
   }, [watchlistItems])
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
+    // Added overflow-hidden to main wrapper to prevent any accidental page overflow
+    <div className="max-w-6xl mx-auto px-4 py-6 overflow-hidden">
       {loading ? (
-        <div className="py-10"><Skeleton count={4} /></div>
+        // Added overflow-hidden to skeleton container so it doesn't push width out on mobile
+        <div className="py-10 w-full overflow-hidden">
+            <Skeleton count={4} />
+        </div>
       ) : (
         <>
           {hero && (
@@ -81,9 +85,8 @@ export default function HomePage() {
 
           {(recLoading || (recommended && recommended.length > 0)) ? (
             <section className="mb-6">
-              {/* FIX: Text color adapts to theme */}
               <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Recommended for you</h2>
-              <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
+              <div className="flex gap-4 overflow-x-auto w-full py-2 custom-scrollbar">
                 {recLoading ? (
                   <Skeleton count={6} />
                 ) : (
@@ -93,37 +96,29 @@ export default function HomePage() {
             </section>
           ) : (watchlistItems.length === 0 && !loading && (
             <section className="mb-6">
-               {/* FIX: Text color adapts to theme */}
               <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Recommended for you</h2>
               <p className="text-gray-600 dark:text-gray-400">Add to your watchlist to get personalized picks!</p>
             </section>
           ))}
 
           <section className="mb-6">
-             {/* FIX: Text color adapts to theme */}
             <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Trending Now</h2>
-            <div className="flex gap-4 overflow-x-autoXH py-2 custom-scrollbar">
+            {/* FIX: Corrected typo 'overflow-x-autoXH' to 'overflow-x-auto' */}
+            <div className="flex gap-4 overflow-x-auto w-full py-2 custom-scrollbar">
               {trending.map(i => <MovieCard key={`t-${i.id}`} item={i} />)}
             </div>
           </section>
 
           <section className="mb-6">
-             {/* FIX: Text color adapts to theme */}
             <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Popular Movies</h2>
-            <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
+            <div className="flex gap-4 overflow-x-auto w-full py-2 custom-scrollbar">
               {popular.map(i => <MovieCard key={`p-${i.id}`} item={i} />)}
             </div>
           </section>
 
           <section className="mb-6">
-             {/* FIX: Text color adapts to theme */}
             <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Top Rated TV Shows</h2>
-            <div className="flex gap-4 overflow-x-auto py-2 custom-scrollbar">
+            <div className="flex gap-4 overflow-x-auto w-full py-2 custom-scrollbar">
               {topTv.map(i => <MovieCard key={`tv-${i.id}`} item={i} />)}
             </div>
           </section>
-        </>
-      )}
-    </div>
-  )
-}
