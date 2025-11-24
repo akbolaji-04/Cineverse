@@ -64,7 +64,7 @@ export default function HomePage() {
       {loading ? (
         // Added overflow-hidden to skeleton container so it doesn't push width out on mobile
         <div className="py-10 w-full overflow-hidden">
-            <Skeleton count={4} />
+          <Skeleton count={4} />
         </div>
       ) : (
         <>
@@ -72,7 +72,7 @@ export default function HomePage() {
             <section
               className="relative rounded-xl overflow-hidden mb-8 bg-cover bg-center min-h-[500px] md:h-[600px] flex items-end shadow-2xl"
               style={{
-                backgroundImage: `url(${hero.backdrop_path ? 'https://image.tmdb.org/t/p/original'+hero.backdrop_path : ''})`
+                backgroundImage: `url(${hero.backdrop_path ? 'https://image.tmdb.org/t/p/original' + hero.backdrop_path : ''})`
               }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#071018] via-black/60 to-transparent" />
@@ -103,7 +103,6 @@ export default function HomePage() {
 
           <section className="mb-6">
             <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Trending Now</h2>
-            {/* FIX: Corrected typo 'overflow-x-autoXH' to 'overflow-x-auto' */}
             <div className="flex gap-4 overflow-x-auto w-full py-2 custom-scrollbar">
               {trending.map(i => <MovieCard key={`t-${i.id}`} item={i} />)}
             </div>
@@ -122,4 +121,8 @@ export default function HomePage() {
               {topTv.map(i => <MovieCard key={`tv-${i.id}`} item={i} />)}
             </div>
           </section>
-export default HomePage
+        </>
+      )}
+    </div>
+  )
+}
