@@ -28,11 +28,13 @@ export default function Autosuggest({ onSearch = () => {}, onNavigateTo = () => 
     let cancelled = false
     ;(async () => {
       try {
-        constZVdata = await tmdbGet('/search/multi', { query: debounced, page: 1 })
+        const data = await tmdbGet('/search/multi', { query: debounced, page: 1 })
         if (cancelled) return
-        const results = (ZVdata.results || []).filter(r => r.media_type !== 'person' || r.profile_path)
+        
+        // FIX: Enhanced Filter
+        // Now we filter out ANY result (movie/tv or person) that doesn't have an image.
+        const results = (data.results || []).filter(r => r.poster_path || r.profile_path)
 
-        // Rank suggestions: prefer movie/tv over person and sort by popularity
         results.sort((a, b) => {
           const aScore = ((a.media_type === 'movie' || a.media_type === 'tv') ? 1000000 : 0) + (a.popularity || 0)
           const bScore = ((b.media_type === 'movie' || b.media_type === 'tv') ? 1000000 : 0) + (b.popularity || 0)
@@ -96,8 +98,6 @@ export default function Autosuggest({ onSearch = () => {}, onNavigateTo = () => 
           onKeyDown={onKeyDown}
           placeholder="Search movies, shows, people..."
           aria-label="Search"
-          // FIX: Added 'bg-gray-100' for light mode, kept 'dark:bg-white/5' for dark mode
-          // FIX: Added 'text-gray-900' for light mode text color
           className="w-full rounded-lg px-3 py-2 bg-gray-100 dark:bg-white/5 placeholder:text-gray-500 dark:placeholder:text-gray-400 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-red-400 border border-transparent dark:border-white/10"
         />
         <button
