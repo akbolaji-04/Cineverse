@@ -29,7 +29,7 @@ export default function WatchlistPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
       {/* Header Section with Title and Global Export Button */}
-      <div className="flex justify-between items-center mb-6 border-b border-gray-200 dark:border-white/10 pb-4">
+      <div className="flex justify-between items-center mb-8 border-b border-gray-200 dark:border-white/10 pb-4">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Your Watchlist</h2>
         
         <button 
@@ -43,16 +43,17 @@ export default function WatchlistPage() {
         </button>
       </div>
 
-      {/* Grid Layout */}
-      <div className="flex gap-6 flex-wrap">
+      {/* Responsive Grid Layout */}
+      {/* Switch from Flex to Grid for better desktop structure */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-8 gap-x-4 justify-items-center">
         {items.map(i => (
-          <div key={`${i.id}-${i.media_type}`} className="flex flex-col items-center w-[150px]">
+          <div key={`${i.id}-${i.media_type}`} className="flex flex-col items-center w-full">
             <MovieCard item={i} />
             
-            {/* Clean Remove Button */}
+            {/* Clean Remove Button - Fixed width to match poster */}
             <button 
               onClick={() => removeItem(i.id, i.media_type)} 
-              className="mt-3 w-full px-3 py-1.5 rounded-md bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold transition-colors border border-red-200 dark:border-red-500/20"
+              className="mt-3 w-[150px] px-3 py-1.5 rounded-md bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold transition-colors border border-red-200 dark:border-red-500/20"
             >
               Remove
             </button>
