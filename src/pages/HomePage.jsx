@@ -26,7 +26,18 @@ export default function HomePage() {
         setTrending(trendingData.results || [])
         setPopular(popularData.results || [])
         setTopTv(topTvData.results || [])
-        setHero((topRated.results && topRated.results[0]) || null)
+
+        // FIX: Dynamic Hero Logic
+        // This rotates the hero movie daily based on the date (1-31)
+        // It cycles through the top 20 movies so it's always a "top rated" film but changes daily.
+        const topMovies = topRated.results || []
+        if (topMovies.length > 0) {
+          const dayIndex = new Date().getDate() % topMovies.length
+          setHero(topMovies[dayIndex])
+        } else {
+          setHero(null)
+        }
+
       } catch (e) {
         console.error(e)
       } finally {
@@ -59,12 +70,10 @@ export default function HomePage() {
   }, [watchlistItems])
 
   return (
-    // Added overflow-hidden to main wrapper to prevent any accidental page overflow
     <div className="max-w-6xl mx-auto px-4 py-6 overflow-hidden">
       {loading ? (
-        // Added overflow-hidden to skeleton container so it doesn't push width out on mobile
         <div className="py-10 w-full overflow-hidden">
-          <Skeleton count={4} />
+            <Skeleton count={4} />
         </div>
       ) : (
         <>
@@ -72,7 +81,7 @@ export default function HomePage() {
             <section
               className="relative rounded-xl overflow-hidden mb-8 bg-cover bg-center min-h-[500px] md:h-[600px] flex items-end shadow-2xl"
               style={{
-                backgroundImage: `url(${hero.backdrop_path ? 'https://image.tmdb.org/t/p/original' + hero.backdrop_path : ''})`
+                backgroundImage: `url(${hero.backdrop_path ? 'https://image.tmdb.org/t/p/original'+hero.backdrop_path : ''})`
               }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#071018] via-black/60 to-transparent" />
