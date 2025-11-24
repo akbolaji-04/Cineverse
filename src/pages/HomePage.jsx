@@ -122,3 +122,4 @@ export default function HomePage() {
               {topTv.map(i => <MovieCard key={`tv-${i.id}`} item={i} />)}
             </div>
           </section>
+export default HomePage
